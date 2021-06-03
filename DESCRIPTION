@@ -20,3 +20,5 @@ Imports:
     magrittr,
     purrr,
     data.table
+URL: https://github.com/smach/CivicPlusScraper
+BugReports: https://github.com/smach/CivicPlusScraper/issues
