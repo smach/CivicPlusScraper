@@ -37,7 +37,7 @@ remotes::install_github("smach/CivicPlusScraper")
 
 ## Downloading agendas and minutes from a CivicPlus government website
 
-1. Get list of public meeting links using the `get_list_of_meeting_links()` function.
+Get list of public meeting links using the `get_list_of_meeting_links()` function.
 
 ```{r eval=FALSE}
 library(CivicPlusScraper)
@@ -46,7 +46,7 @@ meeting_page_links <- get_list_of_meeting_links()
 
 ```
 
-2. For each of those public meeting pages, download any available agenda and/or minutes.
+For each of those public meeting pages, download any available agenda and/or minutes.
 
 ```{r eval = FALSE}
 
@@ -58,7 +58,7 @@ all_my_files <- purrr::map_df(meeting_page_links, download_data_from_meeting_pag
 
 ```
 
-3. Get number of pages for each downloaded file, then convert each file to text. Do one version with full text and one with a maximum page numbers.
+Get number of pages for each downloaded file, then convert each file to text. Do one version with full text and one with a maximum page numbers.
 
 ```{r eval = FALSE}
 library(pdftools)
