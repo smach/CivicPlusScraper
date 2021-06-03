@@ -31,7 +31,7 @@ functions to make them work for another CivicPlus meeting portal.
 This package is not on CRAN, but you can install it with
 
 ``` r
-remotes::install("smach/CivicPlusScraper")
+remotes::install_github("smach/CivicPlusScraper")
 ```
 
 ## Downloading agendas and minutes from a CivicPlus government website

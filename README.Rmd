@@ -31,7 +31,7 @@ The URL structures used for functions in this package are probably somewhat Fram
 This package is not on CRAN, but you can install it with
 
 ``` r
-remotes::install("smach/CivicPlusScraper")
+remotes::install_github("smach/CivicPlusScraper")
 ```
 
 
