@@ -1,0 +1,102 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# CivicPlusScraper
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+**THIS IS A WORK IN PROGRESS.** You are welcome to use and/or adapt the
+code, but **I’M STILL WORKING ON THIS AND IT IS NOT MEANT FOR PUBLIC USE
+AS IS.**
+
+I’m creating this package to scrape public meeting agendas and minutes
+from the [Framingham, MA government
+website](http://framinghamma.iqm2.com/Citizens/default.aspx), which was
+creating using the [CivicPlus](https://www.civicplus.com/) platform.
+More specifically, I’m interested in the meeting portal, and ways to 1)
+download meeting agendas and minutes, and 2) turn the PDfs into
+searchable text.
+
+Thanks to the [rvest](https://rvest.tidyverse.org/) and
+[pdftools](https://docs.ropensci.org/pdftools/) packages, this is
+possible!
+
+The URL structures used for functions in this package are probably
+somewhat Framingham-specific. However, you could probably tweak the
+functions to make them work for another CivicPlus meeting portal.
+
+## Installation
+
+This package is not on CRAN, but you can install it with
+
+``` r
+remotes::install("smach/CivicPlusScraper")
+```
+
+## Downloading agendas and minutes from a CivicPlus government website
+
+1.  Get list of public meeting links using the
+    `get_list_of_meeting_links()` function.
+
+``` r
+library(CivicPlusScraper)
+meeting_page_links <- get_list_of_meeting_links()
+```
+
+1.  For each of those public meeting pages, download any available
+    agenda and/or minutes.
+
+``` r
+my_data_directory <- "D:/Sharon/My Documents Data Drive/FraminghamMeetings"
+
+all_my_files <- purrr::map_df(meeting_page_links, download_data_from_meeting_page, the_dir = my_data_directory)
+```
+
+1.  Get number of pages for each downloaded file, then convert each file
+    to text. Do one version with full text and one with a maximum page
+    numbers.
+
+``` r
+library(pdftools)
+NumPages <- purrr::map_int(all_my_files$File, get_pages)
+all_my_files$NumPages <- NumPages
+
+
+
+# If you've done this before and saved earlier links, load them
+my_data_file <- paste0(my_data_directory, "/framingham_meetings.Rds")
+historical_files <- readRDS(my_data_file)
+all_my_files <- dplyr::bind_rows(all_my_files, historical_files) %>%
+  unique()
+saveRDS(all_my_files, "D:/Sharon/My Documents Data Drive/FraminghamMeetings/framingham_meetings.Rds")
+
+# Now get full text
+text_vec_12 <- purrr::map_chr(all_my_files$File, get_text_from_pdf, max_pages = 12)
+names(text_vec_12) <- all_my_files$File
+
+text_vec_full <- purrr::map_chr(all_my_files$File, get_text_from_pdf)
+names(text_vec_full) <- all_my_files$File
+
+all_my_files_fulltext <- all_my_files
+all_my_files_fulltext$Text <- text_vec_full
+
+all_my_files_12pages <- all_my_files
+all_my_files_12pages$Text <- text_vec_12
+
+library(data.table)
+setDT(all_my_files_fulltext)
+setDT(all_my_files_12pages)
+
+save(all_my_files_fulltext, all_my_files_12pages, file = paste0(my_data_directory, "/framingham_meetings_with_text.Rdata"))
+```
+
+You can then search for a term in various ways, such as
+
+``` r
+saxonville_or_nobscot <- all_my_files_fulltext[Text %like% "Saxonville|Nobscot"]
+```
+
+<!--
+You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/master/examples>.
+-->
