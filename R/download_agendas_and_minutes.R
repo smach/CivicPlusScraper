@@ -62,7 +62,8 @@ download_data_from_meeting_page <- function(the_meeting_link, the_root = "http:/
     download_file_name <- paste0(download_file_name, ".pdf")
     download_url <- gsub("Inline=True", "Inline=False", download_url, fixed = TRUE)
     if(!(file.exists(download_file_name))) {
-    download.file(download_url, destfile = download_file_name, mode = "wb")
+   # download.file(download_url, destfile = download_file_name, mode = "wb")
+      download.file(download_url, destfile = download_file_name, quiet = TRUE)
     if(grepl(paste0(my_dir, "/15"), download_file_name)) {
       the_type <- "Minutes"
     } else if (grepl(paste0(my_dir, "/14"), download_file_name)) {

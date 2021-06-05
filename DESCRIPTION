@@ -10,7 +10,9 @@ License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
 Config/testthat/edition: 3
 RoxygenNote: 7.1.1
 Imports: 
@@ -22,3 +24,4 @@ Imports:
     data.table
 URL: https://github.com/smach/CivicPlusScraper
 BugReports: https://github.com/smach/CivicPlusScraper/issues
+VignetteBuilder: knitr
