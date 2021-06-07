@@ -9,7 +9,7 @@
 #' @return vector of character strings with URLs of meeting pages
 #' @export
 #'
-get_list_of_meeting_links <- function(the_url = "http://framinghamma.iqm2.com", the_start = "1/1/2021", the_end = "12/31/2021") {
+get_list_of_meeting_links_original <- function(the_url = "http://framinghamma.iqm2.com", the_start = "1/1/2021", the_end = "12/31/2021") {
   myurl <- glue::glue("{the_url}/Citizens/calendar.aspx?From={the_start}&To={the_end}")
   my_html <- xml2::read_html(myurl)
   # Step 2 - Find css you want with SelectorGadget

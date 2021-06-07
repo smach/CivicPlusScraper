@@ -21,7 +21,10 @@ Imports:
     rvest,
     magrittr,
     purrr,
-    data.table
+    data.table,
+    lubridate,
+    stringr,
+    dplyr
 URL: https://github.com/smach/CivicPlusScraper
 BugReports: https://github.com/smach/CivicPlusScraper/issues
 VignetteBuilder: knitr
