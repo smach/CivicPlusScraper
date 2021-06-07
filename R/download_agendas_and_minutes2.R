@@ -12,7 +12,7 @@
 get_list_of_meeting_links <- function(the_url = "http://framinghamma.iqm2.com", the_start = "1/1/2021", the_end = "12/31/2021", my_dir = "www") {
 
 
-  myurl <- glue::glue("{the_url}/Citizens/calendar.aspx?From={the_start}&To={the_end}")
+  my_url <- glue::glue("{the_url}/Citizens/calendar.aspx?From={the_start}&To={the_end}")
 
 # Step 1 - Load libraries and download HTML
 library(dplyr)
